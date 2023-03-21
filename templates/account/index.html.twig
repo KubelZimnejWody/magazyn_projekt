@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; text-align: center; border: solid grey 3px;}
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px;}
+</style>
+
+<div class="example-wrapper">
+    <h1>O, witaj tutaj {{ app.user.username ?? 'Anonymous user' }}!</h1>
+
+{#    <table class="table table-condensed" border="1" cellpadding="10">#}
+{#        tbody>#}
+{#        <tr>#}
+{#            <th><h4> ID</h4></th>#}
+{#            <th><h4> hsn_code</h4></th>#}
+{#            <th><h4> product_metric </h4></th>#}
+{#            <th><h4> product_dimension </h4></th>#}
+{#            strong text<th><h4> supplier_name</h4></th>#}
+
+
+{#        </tr>#}
+
+{#        {%  for newproduct in newproduct %}#}
+{#        <tr>#}
+{#            <td> {{ newproduct.ID}}        </td>#}
+{#            {% for category in category %}#}
+{#            <td> {{ category.category }}       </td>#}
+{#            {% endfor %#}
+{#            <td> {{ newproduct.product_code}}       </td>#}
+{#            <td> {{ newproduct.product_name}}       </td>#}
+{#            <td> {{ newproduct.quantity }}          </td>#}
+{#            <td> {{ newproduct.price }}             </td>#}
+{#            <td> {{ newproduct.gst }}               </td>#}
+{#            <td> {{ newproduct.hsn_code }}           </td>#}
+{#            <td> {{ newproduct.product_metric }}     </td>#}
+{#            <td> {{ newproduct.product_dimension }}  </td>#}
+{#            <td> {{ newproduct.supplier_name }}      </td>#}
+
+
+{#            </tr>#}
+{#            {% endfor %}#}
+
+{#            </tbody>#}
+{#    </table>#}
+</div>
+{% endblock %}
