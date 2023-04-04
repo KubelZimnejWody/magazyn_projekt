@@ -1,49 +1,63 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Hello AccountController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; text-align: center; border: solid grey 3px;}
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px;}
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+            text-align: center;
+            border: solid grey 3px;
+        }
 
-<div class="example-wrapper">
-    <h1>O, witaj tutaj {{ app.user.username ?? 'Anonymous user' }}!</h1>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
 
-{#    <table class="table table-condensed" border="1" cellpadding="10">#}
-{#        tbody>#}
-{#        <tr>#}
-{#            <th><h4> ID</h4></th>#}
-{#            <th><h4> hsn_code</h4></th>#}
-{#            <th><h4> product_metric </h4></th>#}
-{#            <th><h4> product_dimension </h4></th>#}
-{#            strong text<th><h4> supplier_name</h4></th>#}
-
-
-{#        </tr>#}
-
-{#        {%  for newproduct in newproduct %}#}
-{#        <tr>#}
-{#            <td> {{ newproduct.ID}}        </td>#}
-{#            {% for category in category %}#}
-{#            <td> {{ category.category }}       </td>#}
-{#            {% endfor %#}
-{#            <td> {{ newproduct.product_code}}       </td>#}
-{#            <td> {{ newproduct.product_name}}       </td>#}
-{#            <td> {{ newproduct.quantity }}          </td>#}
-{#            <td> {{ newproduct.price }}             </td>#}
-{#            <td> {{ newproduct.gst }}               </td>#}
-{#            <td> {{ newproduct.hsn_code }}           </td>#}
-{#            <td> {{ newproduct.product_metric }}     </td>#}
-{#            <td> {{ newproduct.product_dimension }}  </td>#}
-{#            <td> {{ newproduct.supplier_name }}      </td>#}
+    <div class="example-wrapper">
+        <h1>O, witaj tutaj {{ app.user.username ?? 'Anonymous user' }}!</h1>
+    </div>
 
 
-{#            </tr>#}
-{#            {% endfor %}#}
+    {% for w in warehouses %}
+        <div>
+            <h4>{{ w.getName() }}</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>name</th>
+                        <th>quantity</th>
+                        <th>unit</th>
+                        <th>vat</th>
+                        <th>price</th>
+                    </tr>
+                </thead>
 
-{#            </tbody>#}
-{#    </table>#}
-</div>
+                <tbody>
+                {% for item in w.items %}
+                    <tr>
+                        <td> {{ item.getId() }}</td>
+                        <td> {{ item.getName() }}</td>
+                        <td> {{ item.getQuantity() }}</td>
+                        <td> {{ item.getUnit() }}</td>
+                        <td> {{ item.getVat() }}</td>
+                        <td> {{ item.getPrice() }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+    {% endfor %}
+    <input type="button" onclick="location.href='http://magazyn-projekt/add/user';" value="Dodaj nowego uzytkownika" />
+    <input type="button" onclick="location.href='http://magazyn-projekt/add/item';" value="Dodaj nowy artykul" />
+    <input type="button" onclick="location.href='http://magazyn-projekt/add/warehouse';" value="Dodaj nowy magazyn" />
+    <input type="button" onclick="location.href='http://magazyn-projekt/delete/user/cotroller';" value="usuń użytkownika" />
+    <input type="button" onclick="location.href='http://magazyn-projekt/logout';" value="Wyloguj się" />
 {% endblock %}

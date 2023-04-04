@@ -38,7 +38,15 @@ class ItemRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+//    public function finditemsByWarehouseID(int $id): array
+//    {
+//
+////        $dql = 'SELECT i FROM App\Entity\Item i WHERE i.warehouse_id = :id';
+////
+////        $query = $this->getEntityManager()->createQuery($dql);
+////        $query->setParameter('id', $id);
+////        return $query->execute();
+//    }
 //    /**
 //     * @return Item[] Returns an array of Item objects
 //     */

@@ -18,7 +18,7 @@ class Warehouse
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'warehouseId', targetEntity: Item::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Item::class, orphanRemoval: true)]
     private Collection $items;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'warehouse')]
@@ -103,4 +103,5 @@ class Warehouse
 
         return $this;
     }
+
 }
