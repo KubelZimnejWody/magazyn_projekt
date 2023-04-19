@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Item;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,26 @@ class ItemRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getItems()
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->select('i')
+            ->from('App:Item', 'item_alias');
+
+        return $qb;
+    }
+
+    public function getItemsByWarehouseId(int $warehouseId) : QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb ->from('App:Item', 'alias')
+//            ->join('i.warehouse', 'w')
+            ->where('i.warehouse = :warehouse')
+            ->setParameter('warehouse', $warehouseId);
+
+        return $qb;
     }
 //    public function finditemsByWarehouseID(int $id): array
 //    {

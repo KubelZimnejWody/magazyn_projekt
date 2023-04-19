@@ -10,14 +10,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Item;
+use App\Repository\UserRepository;
+use App\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ReleaseItemController extends AbstractController
 {
     #[Route('/release/item', name: 'app_release_item')]
-    public function index(Request $request, ManagerRegistry $doctrine): Response
+    public function index(Request $request, ManagerRegistry $doctrine, UserRepository $user): Response
     {
         $item = new Item();
-
+        $user = $this->getUser();
         $form = $this->createForm(ReleaseItemFormType::class, $item);
         $form->handleRequest($request);
 
@@ -27,6 +30,10 @@ class ReleaseItemController extends AbstractController
 
             $item->setName($item->getName());
             $item->setQuantity($item->getQuantity());
+            $item->setUnit($item->getUnit());
+            $item->setVat((float)$item->getVat());
+            $item->setPrice((float)$item->getPrice());
+            $item->setWarehouse($item->getWarehouse($user));
 
 
             $entityManager = $doctrine->getManager();

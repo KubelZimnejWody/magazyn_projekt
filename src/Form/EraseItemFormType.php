@@ -4,39 +4,33 @@ namespace App\Form;
 
 use App\Entity\Item;
 use App\Entity\Warehouse;
-use App\Repository\UserRepository;
 use App\Repository\WarehouseRepository;
-use http\Client\Curl\User;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\User\UserInterface;
+//use Symfony\Component\Security\Core\Security;
 
-
-class ReleaseItemFormType extends AbstractType
+class EraseItemFormType extends AbstractType
 {
-
     private $security;
 
     public function __construct(Security $security)
     {
         $this->security = $security;
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
-            ->add('name', TextType::class)
-            ->add('quantity', NumberType::class)
-            ->add('unit', TextType::class)
-            ->add('vat', NumberType::class)
-            ->add('price', NumberType::class)
-            ->add('warehouse', EntityType::class,[
+            ->add('name', EntityType::class,[
                 'class' => Warehouse::class,
+                'multiple'=> true,
                 'choice_label' => 'name',
                 'placeholder' => 'Choose a warehouse',
                 'required' => true,
@@ -48,15 +42,14 @@ class ReleaseItemFormType extends AbstractType
                     return  $wr->getWarehousesByUserId($this->security->getUser()->getId());
                 }
             ])
-            ->add('wydaj', SubmitType::class)
-
+            ->add('submit', SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Item::class,
+            'data_class' => Warehouse::class,
         ]);
     }
 }

@@ -4,8 +4,13 @@ namespace App\Repository;
 
 use App\Entity\Warehouse;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Client\Curl\User;
+use http\QueryString;
 use phpDocumentor\Reflection\Types\True_;
+use PHPUnit\Util\Json;
+use Symfony\Component\Form\Form;
 
 /**
  * @extends ServiceEntityRepository<Warehouse>
@@ -48,16 +53,25 @@ class WarehouseRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('id', $id);
         return $query->execute();
+    }
 
+    public function getWerhouses()
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->select('w')
+            ->from('App:Warehouse', 'warehouse_alias');
 
-//        $qb = $this->createQueryBuilder();
-//        $qb
-//            ->select('w.*')
-//            ->from('Warehouse', 'w')
-//            ->join('w.users', 'u');
-//
-//        dd($qb->getQuery());
-//        return $qb;
+        return $qb;
+    }
+
+    public function getWarehousesByUserId(int $userId) : QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb ->join('w.users', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $userId);
+
+        return $qb;
     }
 
 //    /**
