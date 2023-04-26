@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
@@ -27,6 +29,14 @@ class Item
 
     #[ORM\Column]
     private ?float $price = null;
+
+    #[ORM\OneToMany(mappedBy: 'item', targetEntity: WarehouseItem::class, orphanRemoval: true)]
+    private Collection $warehouses;
+
+    public function __construct()
+    {
+        $this->warehouses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Item
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WarehouseItem>
+     */
+    public function getWarehouses(): Collection
+    {
+        return $this->warehouses;
+    }
+
+    public function addWarehouse(WarehouseItem $warehouse): self
+    {
+        if (!$this->warehouses->contains($warehouse)) {
+            $this->warehouses->add($warehouse);
+            $warehouse->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWarehouse(WarehouseItem $warehouse): self
+    {
+        if ($this->warehouses->removeElement($warehouse)) {
+            // set the owning side to null (unless already changed)
+            if ($warehouse->getItem() === $this) {
+                $warehouse->setItem(null);
+            }
+        }
 
         return $this;
     }
