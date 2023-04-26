@@ -30,12 +30,7 @@ class ReleaseItemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('quantity', NumberType::class)
-            ->add('unit', TextType::class)
-            ->add('vat', NumberType::class)
-            ->add('price', NumberType::class)
-            ->add('warehouse', EntityType::class,[
+            ->add('name', EntityType::class,[
                 'class' => Warehouse::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choose a warehouse',
@@ -48,7 +43,7 @@ class ReleaseItemFormType extends AbstractType
                     return  $wr->getWarehousesByUserId($this->security->getUser()->getId());
                 }
             ])
-            ->add('wydaj', SubmitType::class)
+            ->add('przyjmij', SubmitType::class)
 
         ;
     }
@@ -56,7 +51,7 @@ class ReleaseItemFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Item::class,
+            'data_class' => null,
         ]);
     }
 }

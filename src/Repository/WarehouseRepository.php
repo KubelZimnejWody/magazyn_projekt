@@ -74,6 +74,15 @@ class WarehouseRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    public function getUsers(int $user) : QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->where('w.users = :users')
+            ->setParameter('users', $user);
+
+        return $qb;
+    }
+
 //    /**
 //     * @return Warehouse[] Returns an array of Warehouse objects
 //     */

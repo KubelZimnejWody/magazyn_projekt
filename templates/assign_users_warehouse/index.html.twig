@@ -9,12 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Przypisz Uzytkownikow</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/kubol/Desktop/Hermeciok_mp1/magazyn_projekt/src/Controller/AssignUsersWarehouseController.php'|file_link(0) }}">src/Controller/AssignUsersWarehouseController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/kubol/Desktop/Hermeciok_mp1/magazyn_projekt/templates/assign_users_warehouse/index.html.twig'|file_link(0) }}">templates/assign_users_warehouse/index.html.twig</a></code></li>
-    </ul>
+    {{ form(AssignUserWarehouseForm) }}
 </div>
 {% endblock %}

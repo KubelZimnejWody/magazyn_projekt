@@ -15,7 +15,6 @@ class DeleteWarehouseController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(DeleteWarehouseFormType::class);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())

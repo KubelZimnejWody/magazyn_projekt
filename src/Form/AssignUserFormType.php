@@ -2,35 +2,36 @@
 
 namespace App\Form;
 
-use App\Entity\Item;
-use App\Repository\ItemRepository;
+use App\Entity\User;
+use App\Entity\Warehouse;
+use App\Repository\UserRepository;
+use App\Repository\WarehouseRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DeleteItemFormType extends AbstractType
+class AssignUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', EntityType::class, [
-                'class' => Item::class,
-//                'multiple'=> true,
-                'choice_label' => 'name',
-                'placeholder' => 'wybierz artykul',
+            ->add('id', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'username',
+                'placeholder' => 'wybierz uzytkownika',
                 'required' => true,
-                'attr' => [
-                    'class' => 'select2',
+                'attr' =>[
+                    'class'=> 'select2'
                 ],
-                'query_builder' => function(ItemRepository $ir)
+                'query_builder' => function (UserRepository $ur)
                 {
-                    return $ir->getItems();
+                    return $ur->getUsers();
                 }
             ])
-            ->add('usun', SubmitType::class)
+            ->add('submit', SubmitType::class)
+
         ;
     }
 

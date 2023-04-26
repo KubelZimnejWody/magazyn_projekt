@@ -17,7 +17,7 @@ class DeleteUserFormType extends AbstractType
         $builder
             ->add('username', EntityType::class,[
                 'class' => User::class,
-                'multiple' => true,
+//                'multiple' => true,
                 'choice_label' => 'username',
                 'placeholder' => 'wybierz uzytkownika',
                 'required' => true,
@@ -37,7 +37,7 @@ class DeleteUserFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => null,
         ]);
     }
 }
