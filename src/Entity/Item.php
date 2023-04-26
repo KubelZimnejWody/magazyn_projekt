@@ -28,10 +28,6 @@ class Item
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'items')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Warehouse $warehouse = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -93,18 +89,6 @@ class Item
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getWarehouse(): ?Warehouse
-    {
-        return $this->warehouse;
-    }
-
-    public function setWarehouse(?Warehouse $warehouse): self
-    {
-        $this->warehouse = $warehouse;
 
         return $this;
     }
