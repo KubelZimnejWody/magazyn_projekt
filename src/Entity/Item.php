@@ -18,17 +18,11 @@ class Item
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?float $quantity = null;
-
     #[ORM\Column(length: 10)]
     private ?string $unit = null;
 
     #[ORM\Column]
     private ?float $vat = null;
-
-    #[ORM\Column]
-    private ?float $price = null;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: WarehouseItem::class, orphanRemoval: true)]
     private Collection $warehouses;
@@ -55,18 +49,6 @@ class Item
         return $this;
     }
 
-    public function getQuantity(): ?float
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(float $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
     public function getUnit(): ?string
     {
         return $this->unit;
@@ -87,18 +69,6 @@ class Item
     public function setVat(float $vat): self
     {
         $this->vat = $vat;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }
