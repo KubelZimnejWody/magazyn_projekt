@@ -18,15 +18,11 @@ class Warehouse
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'warehouse', targetEntity: Item::class, orphanRemoval: true)]
-    private Collection $items;
-
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'warehouse')]
     private Collection $users;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -43,36 +39,6 @@ class Warehouse
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Item>
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Item $item): self
-    {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setWarehouse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): self
-    {
-        if ($this->items->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getWarehouse() === $this) {
-                $item->setWarehouse(null);
-            }
-        }
 
         return $this;
     }
