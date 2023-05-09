@@ -68,7 +68,7 @@ class WarehouseController extends AbstractController
         return $this->redirectToRoute("app_warehouses_list");
     }
 
-    #[Route("/warehouses/assign", name: "app_warehouses_assign")]
+    #[Route("/warehouses/user/assign", name: "app_warehouses_assign_user")]
     #[Security("is_granted('ROLE_SUPER_ADMIN')")]
     public function assignUserToWarehouse(Request $request,  WarehouseRepository $wr, EntityManagerInterface $entityManager): Response
     {
@@ -92,31 +92,27 @@ class WarehouseController extends AbstractController
             return $this->redirectToRoute('app_warehouses_list');
         }
 
-        return $this->render('assign_users_warehouse/assign_user.html.twig', [
+        return $this->render('warehouses/assign_user.html.twig', [
             'AssignUserForm' => $form->createview(),
             'warehouses' => $warehouseId,
         ]);
     }
 
-    #[Route("/warehouses/delete_user", name: "app_warehouses_delete_user")]
+    #[Route("/warehouses/user/delete", name: "app_warehouses_delete_user")]
     #[Security("is_granted('ROLE_SUPER_ADMIN')")]
-    public function deleteUserFromWarehouse(Request $request, EntityManagerInterface $entityManager, WarehouseRepository $wr, UserRepository $ur):Response
+    public function deleteUserFromWarehouse(Request $request, EntityManagerInterface $entityManager, WarehouseRepository $wr, UserRepository $ur): Response
     {
         $warehouseId = $request->get('warehouseId');
         $userId = $request->get('userId');
-        $warehouse = $wr->find($warehouseId);
-        $user = $ur->find($userId);
-        //$user = $ur->findOneBy(['users' => $userId]);
-        if (!empty($user) && !empty($warehouse)){
+
+        if (!empty($warehouseId) && !empty($userId)) {
+            $warehouse = $wr->find($warehouseId);
+            $user = $ur->find($userId);
+
             $warehouse->removeUser($user);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_warehouses_list');
         }
 
-        return $this->render('assign_users_warehouse/assign_user.html.twig', [
-            'warehouses' => $warehouseId,
-        ]);
-
+        return $this->redirectToRoute('app_warehouses_list');
     }
 }
