@@ -83,6 +83,18 @@ class WarehouseRepository extends ServiceEntityRepository
         return $qb;
     }
 
+    public function removeUsers(int $user, int $warehouse) : QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('w');
+        $qb->delete()
+            ->where('w.users = :users')
+            ->andWhere('w.id = :id')
+            ->setParameter('id', $warehouse)
+            ->setParameter('users', $user);
+
+        return $qb;
+    }
+
 //    /**
 //     * @return Warehouse[] Returns an array of Warehouse objects
 //     */

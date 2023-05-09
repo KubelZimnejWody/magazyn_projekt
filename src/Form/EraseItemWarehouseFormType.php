@@ -26,20 +26,6 @@ class EraseItemWarehouseFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id', EntityType::class,[
-                'class' => Item::class,
-                'choice_label' => 'name',
-                'placeholder' => 'choose an item id',
-                'required' => true,
-                'mapped' => false,
-                'attr' => [
-                    'class' => 'select2',
-                ],
-                'query_builder' => function (ItemRepository $ir) use ($options)
-                {
-                    return $ir->getItemsByWarehouseId($options['warehouseId']);
-                }
-            ])
             ->add('quantity',NumberType::class)
             ->add('submit', SubmitType::class)
         ;

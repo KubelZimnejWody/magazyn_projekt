@@ -2,14 +2,11 @@
 
 namespace App\Form;
 
-use App\Entity\Item;
-use App\Repository\ItemRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,34 +22,20 @@ class ReleaseItemWarehouseFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id', EntityType::class,[
-                'class' => Item::class,
-                'choice_label' => 'id',
-                'placeholder' => 'choose an item id',
+            ->add('quantity', NumberType::class, [
+                'label' => false,
                 'required' => true,
-                'mapped' => false,
-                'attr' => [
-                    'class' => 'select2',
-                ],
-                'query_builder' => function (ItemRepository $ir) use ($options)
-                {
-                    return $ir->getItemsByWarehouseId($options['warehouseId']);
-                }
+                'attr'=>[
+                    'minlength' => 1,
+                    'placeholder' => 'ilość'
+                ]
             ])
-            ->add('quantity', EntityType::class)
-            ->add('unit', TextType::class, [
-                'class' => Item::class,
-                'choice_label' => 'unit',
-                'placeholder' => 'choose an item id',
-                'required' => true,
-                'mapped' => false,
+            ->add('submit', SubmitType::class, [
+                'label' => 'Zatwierdź',
                 'attr' => [
-                    'class' => 'select2',
-                ],
+                    'class' => 'btn btn-primary w-100'
+                ]
             ])
-            ->add('vat', NumberType::class)
-            ->add('price', NumberType::class)
-            ->add('submit', SubmitType::class)
         ;
     }
 

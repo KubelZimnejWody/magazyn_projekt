@@ -14,8 +14,20 @@ class AddWarehouseFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('add', SubmitType::class)
+            ->add('name', TextType::class, [
+                'label' => false,
+                'required' => true,
+                'attr' => [
+                    'minlength' => 3,
+                    'placeholder' => "Nazwa"
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Zatwierdź',
+                'attr' => [
+                    'class' => 'btn btn-primary w-100'
+                ]
+            ])
         ;
     }
 

@@ -59,6 +59,18 @@ class ItemRepository extends ServiceEntityRepository
 
         return $qb;
     }
+
+    public function getItemsNotInWarehouse(int $warehouseId): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('i');
+        $qb->select('i')
+            ->leftJoin('i.warehouses', 'w')
+            ->where($qb->expr()->neq('w.warehouse', ':warehouseId'))
+            ->orWhere($qb->expr()->isNull('w.warehouse'))
+            ->setParameter('warehouseId', $warehouseId);
+
+        return $qb;
+    }
 //    public function finditemsByWarehouseID(int $id): array
 //    {
 //

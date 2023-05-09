@@ -10,39 +10,40 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ path('app_account') }}">Domek</a>
+                    <a class="nav-link active" aria-current="page" href="{{ path('app_index') }}">Domek</a>
                 </li>
 
-                <li class="nav-item">
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Panel Administratora
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><h6 class="dropdown-header">Użytkownicy</h6></li>
+                            <li><a class="dropdown-item" href="{{ path('app_users_list') }}">Zarządznie</a></li>
+
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Magazyny</h6></li>
+                            <li><a class="dropdown-item" href="{{ path('app_warehouses_list') }}">Zarządzanie</a></li>
+                            {#                        <li><a class="dropdown-item" href="{{ path('app_add_warehouse') }}">Add Warehouse</a></li>#}
+
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">Artykuły</h6></li>
+                            <li><a class="dropdown-item" href="{{ path('app_items_list') }}">Zarządzanie</a></li>
+                            {#                        <li><a class="dropdown-item" href="{{ path('app_items_add') }}">Dodanie</a></li>#}
+                            {#                        <li><a class="dropdown-item" href="{{ path('app_release_item') }}">Release Item</a></li>#}
+                            {#                        <li><a class="dropdown-item" href="{{ path('app_erase_item') }}">Erase Item</a></li>#}
+                            {#                        <li><a class="dropdown-item" href="{{ path('app_delete_item') }}">Remove Item</a></li>#}
+                            {#                        <li><a class="dropdown-item" href="{{ path('app_add_invoice') }}">Add Invoice</a></li>#}
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ml-auto">
                     <a class="nav-link active" aria-current="page" href="{{ path('app_logout') }}">Wyloguj sie</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Panel Administratora
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li><h6 class="dropdown-header">Użytkownicy</h6></li>
-                        <li><a class="dropdown-item" href="{{ path('app_add_user') }}">Dodaj użytkownika</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_delete_user') }}">Remove User</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_assign_users_warehouse') }}">Assing User</a></li>
-
-                        <li><hr class="dropdown-divider"></li>
-                        <li><h6 class="dropdown-header">Magazyny</h6></li>
-                        <li><a class="dropdown-item" href="{{ path('app_add_warehouse') }}">Add Warehouse</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_delete_warehouse') }}">Remove Warehouse</a></li>
-
-                        <li><hr class="dropdown-divider"></li>
-                        <li><h6 class="dropdown-header">Artykuły</h6></li>
-                        <li><a class="dropdown-item" href="{{ path('app_items_list') }}">Zarządzanie</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_add_item') }}">Add Item</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_release_item') }}">Release Item</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_erase_item') }}">Erase Item</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_delete_item') }}">Remove Item</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_add_invoice') }}">Add Invoice</a></li>
-                    </ul>
                 </li>
             </ul>
         </div>

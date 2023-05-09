@@ -2,12 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Item;
-use App\Entity\Warehouse;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Repository\ItemRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,28 +14,43 @@ class AddItemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('quantity', NumberType::class)
-            ->add('unit', TextType::class)
-            ->add('vat', NumberType::class)
-            ->add('price', NumberType::class)
-            ->add('warehouse', EntityType::class,[
-                'class' => Warehouse::class,
-                'choice_label' => 'name',
-                'placeholder' => 'Choose a warehouse',
-                'required' => true,
-                'attr' => [
-                    'class' => 'select2',
+            ->add("name", TextType::class, [
+                "label" => false,
+                "required" => true,
+                "attr" => [
+                    "minlength" => 3,
+                    "placeholder" => "Nazwa"
                 ]
             ])
-            ->add('dodaj', SubmitType::class)
+            ->add("unit", TextType::class, [
+                "label" => false,
+                "required" => true,
+                "attr" => [
+                    "minlength" => 1,
+                    "placeholder" => "Jednostka"
+                ]
+            ])
+            ->add("vat", NumberType::class, [
+                "label" => false,
+                "required" => true,
+                "attr" => [
+                    "min" => 1,
+                    "placeholder" => "Ilość VAT"
+                ]
+            ])
+            ->add("submit", SubmitType::class, [
+                "label" => "Zatwierdź",
+                "attr" => [
+                    "class" => "btn btn-primary w-100"
+                ]
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Item::class,
+            'data_class' => null,
         ]);
     }
 }
