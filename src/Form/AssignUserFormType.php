@@ -30,7 +30,12 @@ class AssignUserFormType extends AbstractType
                     return $ur->getUsers();
                 }
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Zatwierdź',
+                'attr' =>[
+                    'class' => 'btn btn-primary w-100'
+                ]
+            ])
 
         ;
     }
