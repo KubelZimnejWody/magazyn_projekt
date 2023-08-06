@@ -1,0 +1,15 @@
+{% extends 'layout/layout.html.twig' %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <h3>Dodaj magazyn</h3>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+            {{ form(addWarehouseForm) }}
+        </div>
+    </div>
+{% endblock %}
