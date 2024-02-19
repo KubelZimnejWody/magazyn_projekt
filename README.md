@@ -53,7 +53,65 @@
         return $this->oracleConn->executeQuery($query, $params, $types)->fetchAllAssociative();
     }
 
-
+   //////////Tu drugie od Szaraty (nie impuls)\\\\\\\\\\\\\\
+$query = "SELECT 
+                    ec.`KOD_WIN_PRO` as '1',
+                    '' as '2',
+                    ''  as '3',
+                    wc.`date`  as '4',
+                    wc.`dlivraison`  as '5',
+                    '' as '6',
+                    ec.`WARTOSC_NETTO_PLN`  as '7',
+                    '' as '8',
+                    ec.`NUMER_FAKTURY`  as '9',
+                    ''  as '10',
+                    REPLACE(FORMAT(wc.`totht`,2,'pl_PL'),',','.')  as '11',
+                    wc.`tarif`  as '12' ,
+                    REPLACE(IF(ec.`NUMER_ZAMOWIENIA_WG_KLIENTA` IS NULL or ec.`NUMER_ZAMOWIENIA_WG_KLIENTA` = '', '-', ec.`NUMER_ZAMOWIENIA_WG_KLIENTA`),'=','') as '13',
+                    trim(wc.`repres`) as '14',
+                    '' as '15',
+                    '' as '16',
+                    '' as '17',
+                    '' as '18',
+                    '' as '19',
+                    '' as '20'
+                    FROM ekosystem.commission ec 
+                    left join winprox.commande wc on ec.NUMER_ZAMOWIENIA = wc.numero 
+                    left join winprox.client wcli on wcli.code = wc.client 
+                    where ( wc.`dlivraison`  BETWEEN :od AND :do ) 
+                    and SUBSTRING( wc.numero,1,POSITION('/' IN wc.numero)-1) not in ('TRA', 'SEW', 'TRAA', 'TRAAL', 'WYSTW', 'WYST', 'TRAW', 'TRAAW', 'SEWAL', 'SERW', 'SERA', 'SERAW', 'ZTRA', 'ZWR', 'SAL','SERAL', 'OKL','OF', 'OFAL','WYSTAL', 'BRK', 'KUR', 'REKL', 'SERWD', 'WYSTD', 'ZWS')
+                   ";
+               
+        
+        $query2="SELECT  
+                    wc.`client` as '1',
+                    '' as '2',
+                    ec.`CREATED_DATE` as '3',
+                    wcli.`pays` as '4',
+                    wc.`numero` as '5',
+                    wc.`date` as '6',
+                    wc.`dlivraison`  as '7',
+                    ec.`DATA_WYSTAWIENIA_FAKTURY` as '8',
+                    ec.`NUMER_FAKTURY`  as '9',
+                    ec.`WARTOSC_ZK_WAL` as '10',
+                    '' as '11',
+                    wd.`code` as '12',
+                    '' as '13',
+                    '' as '14',
+                    trim(wc.`repres`) as '15',
+                    '' as '16',
+                    wc.`tarif`  as '17',
+                    REPLACE(FORMAT(wc.`totht`,2,'pl_PL'),',','.') as '18',
+                    '' as '19',
+                    '' as '20'
+                    FROM winprox.commande wc  
+                    left join ekosystem.commission ec on ec.NUMER_ZAMOWIENIA = wc.numero 
+                    left join winprox.client wcli on wcli.code = wc.client 
+                    left join winprox.devise wd on wd.code = wcli.devise 
+                    where ( wc.`dlivraison`  BETWEEN :od AND :do )
+                     and SUBSTRING( numero,1,POSITION('/' IN numero)-1) not in ('TRA', 'SEW', 'TRAA', 'TRAAL', 'WYSTW', 'WYST', 'TRAW', 'TRAAW', 'SEWAL', 'SERW', 'SERA', 'SERAW', 'ZTRA', 'ZWR', 'SAL', 'SERAL', 'OKL', 'OF', 'OFAL', 'WYSTAL', 'BRK', 'KUR', 'REKL', 'SERWD', 'WYSTD', 'ZWS')
+                     and numero not in (select NUMER_ZAMOWIENIA from ekosystem.commission )
+                    ";
     //////////Tu Krzysia\\\\\\\\\\\\\\
 
     commande.fraisport + (CASE
